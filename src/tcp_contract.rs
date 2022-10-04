@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 pub enum OrderbookTcpContract {
     Ping,
     Pong,
-    Orderbook(Orderbook),
+    Orderbook(OrderbookTcpModel),
 }
 
 impl OrderbookTcpContract {
@@ -23,7 +23,7 @@ impl OrderbookTcpContract {
             return Self::Pong;
         }
 
-        Self::Orderbook(Orderbook::parse(src).unwrap())
+        Self::Orderbook(OrderbookTcpModel::parse(src).unwrap())
     }
 
     pub fn serialize(&self, dest: &mut Vec<u8>) {
@@ -53,16 +53,16 @@ impl my_tcp_sockets::tcp_connection::TcpContract for OrderbookTcpContract {
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct Orderbook {
+pub struct OrderbookTcpModel {
     pub market: String,
     pub bids: Vec<(f64, f64)>,
     pub asks: Vec<(f64, f64)>,
     pub ts: i64,
 }
 
-impl Orderbook {
+impl OrderbookTcpModel {
     pub fn parse(src: &str) -> Option<Self> {
-        let result: Result<Orderbook, _> = serde_json::from_str(src);
+        let result: Result<OrderbookTcpModel, _> = serde_json::from_str(src);
 
         if let Ok(orderbook) = result {
             return Some(orderbook);

@@ -7,18 +7,18 @@ pub use tcp_serializer::*;
 #[cfg(test)]
 mod tests {
     use chrono::{Utc};
-    use crate::Orderbook;
+    use crate::OrderbookTcpModel;
 
     #[test]
     fn test_parse() {
-        let orderbook = Orderbook{
+        let orderbook = OrderbookTcpModel{
             market: "test".to_string(),
             ts: Utc::now().timestamp_micros(),
             bids: vec![(123.4, 123.5)],
             asks: vec![(100.1, 100.2)],
         };
         let json = serde_json::to_string(&orderbook).unwrap();
-        let result = Orderbook::parse(&json).unwrap();
+        let result = OrderbookTcpModel::parse(&json).unwrap();
 
         assert_eq!(result.market, orderbook.market);
         assert_eq!(result.ts, orderbook.ts);
