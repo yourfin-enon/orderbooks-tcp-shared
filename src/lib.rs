@@ -1,7 +1,7 @@
-mod orderbook_tcp_contract;
+mod tcp_contract;
 mod tcp_serializer;
 
-pub use orderbook_tcp_contract::*;
+pub use tcp_contract::*;
 pub use tcp_serializer::*;
 
 #[cfg(test)]
