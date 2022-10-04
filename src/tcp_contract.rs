@@ -43,6 +43,15 @@ impl OrderbookTcpContract {
     }
 }
 
+impl my_tcp_sockets::tcp_connection::TcpContract for OrderbookTcpContract {
+    fn is_pong(&self) -> bool {
+        match self {
+            OrderbookTcpContract::Pong => true,
+            _ => false,
+        }
+    }
+}
+
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Orderbook {
     pub market: String,
