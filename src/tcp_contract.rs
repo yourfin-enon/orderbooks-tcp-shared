@@ -58,8 +58,8 @@ impl my_tcp_sockets::tcp_connection::TcpContract for OrderbookTcpContract {
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct OrderbookTcpModel {
     pub market: String,
-    pub bids: Vec<(f64, f64)>,
-    pub asks: Vec<(f64, f64)>,
+    pub bids: Vec<(String, String)>,
+    pub asks: Vec<(String, String)>,
     pub ts: i64,
 }
 
