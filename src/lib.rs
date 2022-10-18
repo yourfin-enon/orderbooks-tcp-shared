@@ -6,6 +6,8 @@ pub use tcp_serializer::*;
 
 #[cfg(test)]
 mod tests {
+    use std::collections::BTreeMap;
+
     use chrono::{Utc};
     use crate::OrderbookTcpModel;
 
@@ -14,8 +16,8 @@ mod tests {
         let orderbook = OrderbookTcpModel{
             market: "test".to_string(),
             ts: Utc::now().timestamp_micros(),
-            bids: vec![(123.4, 123.5)],
-            asks: vec![(100.1, 100.2)],
+            bids: BTreeMap::from([("123.4".to_string(), "123.5".to_string())]),
+            asks:  BTreeMap::from([("100.1".to_string(), "100.2".to_string())]),
         };
         let json = serde_json::to_string(&orderbook).unwrap();
         let result = OrderbookTcpModel::parse(&json).unwrap();

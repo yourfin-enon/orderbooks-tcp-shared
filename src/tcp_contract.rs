@@ -1,3 +1,5 @@
+use std::collections::BTreeMap;
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone)]
@@ -58,8 +60,8 @@ impl my_tcp_sockets::tcp_connection::TcpContract for OrderbookTcpContract {
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct OrderbookTcpModel {
     pub market: String,
-    pub bids: Vec<(String, String)>,
-    pub asks: Vec<(String, String)>,
+    pub bids: BTreeMap<String, String>,
+    pub asks: BTreeMap<String, String>,
     pub ts: i64,
 }
 
