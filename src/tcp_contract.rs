@@ -7,7 +7,6 @@ pub enum OrderbookTcpContract {
     Ping,
     Pong,
     Orderbook(OrderbookTcpModel),
-    OrderbookUpdate(OrderbookTcpModel),
 }
 
 impl OrderbookTcpContract {
@@ -34,7 +33,6 @@ impl OrderbookTcpContract {
             OrderbookTcpContract::Ping => dest.extend_from_slice(b"PING"),
             OrderbookTcpContract::Pong => dest.extend_from_slice(b"PONG"),
             OrderbookTcpContract::Orderbook(data) => data.serialize(dest),
-            OrderbookTcpContract::OrderbookUpdate(data) => data.serialize(dest),
         }
     }
 
@@ -43,7 +41,6 @@ impl OrderbookTcpContract {
             OrderbookTcpContract::Ping => false,
             OrderbookTcpContract::Pong => false,
             OrderbookTcpContract::Orderbook(_) => true,
-            OrderbookTcpContract::OrderbookUpdate(_) => true,
         }
     }
 }
@@ -63,6 +60,7 @@ pub struct OrderbookTcpModel {
     pub bids: BTreeMap<String, String>,
     pub asks: BTreeMap<String, String>,
     pub ts: i64,
+    pub is_update: bool,
 }
 
 impl OrderbookTcpModel {

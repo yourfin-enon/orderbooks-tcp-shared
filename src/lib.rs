@@ -14,6 +14,7 @@ mod tests {
     #[test]
     fn test_parse() {
         let orderbook = OrderbookTcpModel{
+            is_update: false,
             market: "test".to_string(),
             ts: Utc::now().timestamp_micros(),
             bids: BTreeMap::from([("123.4".to_string(), "123.5".to_string())]),
