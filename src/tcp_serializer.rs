@@ -7,7 +7,6 @@ use my_tcp_sockets::{
 use super::tcp_contract::OrderbookTcpContract;
 
 static CLCR: &[u8] = &[13u8, 10u8];
-const MAX_PACKET_CAPACITY: usize = 512;
 
 pub struct OrderbookTcpSerializer {
     read_buffer: ReadBuffer,
@@ -24,14 +23,14 @@ impl OrderbookTcpSerializer {
 #[async_trait]
 impl TcpSocketSerializer<OrderbookTcpContract> for OrderbookTcpSerializer {
     fn serialize(&self, contract: OrderbookTcpContract) -> Vec<u8> {
-        let mut result = Vec::with_capacity(MAX_PACKET_CAPACITY);
+        let mut result = Vec::new();
         contract.serialize(&mut result);
         result.extend_from_slice(CLCR);
         result
     }
 
     fn serialize_ref(&self, contract: &OrderbookTcpContract) -> Vec<u8> {
-        let mut result = Vec::with_capacity(MAX_PACKET_CAPACITY);
+        let mut result = Vec::new();
         contract.serialize(&mut result);
         result.extend_from_slice(CLCR);
         result

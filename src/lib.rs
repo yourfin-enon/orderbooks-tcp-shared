@@ -13,6 +13,8 @@ mod tests {
 
     #[test]
     fn test_parse() {
+        let str = Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Millis, true);
+        println!("{}", str);
         let orderbook = OrderbookTcpModel{
             is_update: false,
             market: "test".to_string(),
