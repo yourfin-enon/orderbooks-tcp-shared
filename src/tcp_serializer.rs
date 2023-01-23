@@ -22,6 +22,8 @@ impl OrderbookTcpSerializer {
 
 #[async_trait]
 impl TcpSocketSerializer<OrderbookTcpContract> for OrderbookTcpSerializer {
+    const PING_PACKET_IS_SINGLETONE: bool = true;
+    
     fn serialize(&self, contract: OrderbookTcpContract) -> Vec<u8> {
         let mut result = Vec::new();
         contract.serialize(&mut result);
