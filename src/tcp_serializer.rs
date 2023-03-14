@@ -39,7 +39,7 @@ impl TcpSocketSerializer<OrderbookTcpContract> for OrderbookTcpSerializer {
     }
 
     fn get_ping(&self) -> OrderbookTcpContract {
-        return OrderbookTcpContract::Ping;
+        OrderbookTcpContract::Ping
     }
 
     async fn deserialize<TSocketReader: Send + Sync + 'static + SocketReader>(
@@ -49,10 +49,9 @@ impl TcpSocketSerializer<OrderbookTcpContract> for OrderbookTcpSerializer {
         let result = socket_reader
             .read_until_end_marker(&mut self.read_buffer, CLCR)
             .await?;
+        let result = &result[..result.len() - CLCR.len()];
 
-        let result = std::str::from_utf8(&result[..result.len() - CLCR.len()]).unwrap();
-
-        Ok(OrderbookTcpContract::parse(result))
+        Ok(OrderbookTcpContract::deserialize(result))
     }
 
     fn apply_packet(&mut self, _contract: &OrderbookTcpContract) -> bool {
