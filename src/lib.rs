@@ -7,7 +7,7 @@ pub use tcp_serializer::*;
 #[cfg(test)]
 mod tests {
     use std::collections::{HashMap};
-    use chrono::{Utc};
+    use rust_extensions::date_time::DateTimeAsMicroseconds;
     use crate::OrderbookTcpModel;
 
     #[test]
@@ -15,7 +15,7 @@ mod tests {
         let orderbook = OrderbookTcpModel {
             is_update: false,
             market: "test".to_string(),
-            ts: Utc::now().timestamp_micros(),
+            ts: DateTimeAsMicroseconds::now().unix_microseconds,
             bids: HashMap::from([("123.4".to_string(), "123.5".to_string())]),
             asks: HashMap::from([("100.1".to_string(), "100.2".to_string())]),
         };
